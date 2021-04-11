@@ -1,0 +1,45 @@
+<p-table #dt [rows]="6" [paginator]="true"
+  currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowHover]="true" dataKey="id"
+  [showCurrentPageReport]="true" [value]="brands">
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 3rem">
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
+      <th pSortableColumn="name">Markalar <p-sortIcon field="name"></p-sortIcon>
+      </th>
+      <th></th>
+      <th></th>
+      <th>
+        <button  (click)="add()"*ngIf="checkToLogin()" style="background-color: #198754;" pButton pRipple label="Ekle"
+        icon="pi pi-plus" class="p-button-success p-mr-2" ></button>
+      </th>
+
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-brand>
+    <tr>
+      <td> </td>
+      <td>{{brand.brandName}}</td>
+      <td> </td>
+      <td> </td>
+      <td>
+        <button *ngIf="checkToLogin()" (click)='setSelectedBrand(brand)' pButton pRipple icon="pi pi-pencil"
+          style="margin-right:10px;" class="p-button-rounded p-button-success" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+
+        </button>
+
+        <button *ngIf="checkToLogin()" holdable (holdTime)="holdHandler($event,brand)"pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"></button>
+
+      </td>
+
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="summary">
+    <div class="p-d-flex p-ai-center p-jc-between">
+      Toplamda {{brands ? brands.length : 0 }} marka var.
+    </div>
+  </ng-template>
+</p-table>
+<app-brand-update [brandForUpdate]="selectedBrand"></app-brand-update>
